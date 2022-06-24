@@ -3,42 +3,42 @@
 #define TAM 10
 
 typedef struct fila{
-    int f;
-    int r;
-    float elementos[TAM];
+    int primeiro;
+    int ultimo;
+    float fila[TAM];
 }Fila;
 
 
-void inserir(Fila *q, float x);
-void remover(Fila *q);
+void enqueue(Fila *q, float x);
+void dequeue(Fila *q);
 int isEmpty(Fila q);
 int isFull(Fila q);
 void imprimir(Fila q);
 
 
-void inserir(Fila *q, float x){
+void enqueue(Fila *q, float x){
     if(isFull(*q)==0){
-            q->r++;
-            q->elementos[q->r] = x;
+            q->ultimo++;
+            q->fila[q->ultimo] = x;
             
-            if(q->f==-1){
-                q->f++;
-            }
+            if(q->primeiro == -1){
+                q->primeiro++;
+            }//tratando a primeira inserção do primeiro elemento
     }
     else{
         printf("Fila cheia. Nao e possivel inserir elementos. OVERFLOW\n");
     }
 }
 
-void remover(Fila *q){
+void dequeue(Fila *q){
     if(isEmpty(*q)==0){
         
-        if(q->f == q->r){
-            q->f = -1;
-            q->r = -1;
+        if(q->primeiro == q->ultimo){
+            q->primeiro = -1;
+            q->ultimo = -1;
         }
         else{
-            q->f++;
+            q->primeiro++;
         }
     }
     else{
@@ -48,7 +48,7 @@ void remover(Fila *q){
 }
 
 int isEmpty(Fila q){
-    if(q.f == -1){
+    if(q.primeiro == -1){
         return 1;
     }
     else{
@@ -57,7 +57,7 @@ int isEmpty(Fila q){
 }
 
 int isFull(Fila q){
-    if(q.r == TAM-1){
+    if(q.ultimo == TAM-1){
         return 1;
     }
     else{
@@ -71,8 +71,8 @@ void imprimir(Fila q){
     }
     else{
         printf("\nFila = ");
-        for(int i=q.f; i<=q.r; i++){
-            printf("%.2f ", q.elementos[i]);
+        for(int i=q.primeiro; i<=q.ultimo; i++){
+            printf("%.2f ", q.fila[i]);
         }
         printf("\n");
     }
@@ -81,26 +81,29 @@ void imprimir(Fila q){
 
 int main(){
 
-    Fila q = {-1, -1}; // p.topo=-1;
-
+    // Fila q = {-1, -1}; // p.topo=-1;
+    Fila q;
+    q.primeiro = -1;
+    q.ultimo = -1;
+    
     imprimir(q);
-    inserir(&q, 4);
-    inserir(&q, 2);
-    inserir(&q, 5);
-    inserir(&q, 4);
-    inserir(&q, 4);
-    inserir(&q, 2);
-    inserir(&q, 5);
-    inserir(&q, 4);
+    enqueue(&q, 4);
+    enqueue(&q, 2);
+    enqueue(&q, 5);
+    enqueue(&q, 4);
+    enqueue(&q, 4);
+    enqueue(&q, 2);
+    enqueue(&q, 5);
+    enqueue(&q, 4);
     imprimir(q);
-    remover(&q);
+    dequeue(&q);
     imprimir(q);
-    remover(&q);
-    remover(&q);
-    remover(&q);
+    dequeue(&q);
+    dequeue(&q);
+    dequeue(&q);
     imprimir(q);
-    inserir(&q, 40);
-    inserir(&q, 20);
-    inserir(&q, 50);
+    enqueue(&q, 40);
+    enqueue(&q, 20);
+    enqueue(&q, 50);
 
 }

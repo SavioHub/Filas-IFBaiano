@@ -1,23 +1,29 @@
+//A fila Linear a partir do momento que consegue preencher todas as posiçõs dentro do vetor, não conseguimos usar mais esse vetor
+//Mesmo depois de Removerto todod os elee=mentos da Fila, teoricamente não conseguimos fazer mais nada
 #include <stdio.h>
 #define TAM 10
 
-// 0 1 2 3 4
-// 3 4 5 6 9
+typedef struct fila
+{
+    int primeiro;
+    int ultimo;
+    int fila[TAM];
+}Fila;
 
-// primeiro = 0
-// ultimo = 4
 
-// Para o circulo funcionar, deve-se remover um elemento para que o PRIMEIRO rompa um indice, e assim sendo
-//É Possivel adicioonar mais elementos de forma circular
-
-int primeiro;
-int ultimo;
-int fila[TAM];
-
-void start(){
-    int inicio = 0;
-    int ultimo = -1;
+void inseir(Fila *q, float x){
+    if(isFull(*q)==0){
+            q->r = (q->r+1) % TAM;
+            q->elementos[q->r] = x;
+            if(q->f==-1){
+                q->f++;
+            }
+    }
+    else{
+        printf("Fila cheia. Nao e possivel inserir elementos. OVERFLOW\n");
+    }
 }
+// ----------------------------------------------------------------------------------------------
 //Adicionar
 void enqueue(int valor){
     
@@ -47,6 +53,7 @@ int dequeue(){
     {
         printf("\nNão existe valor a ser removido\n");
     }
+    
 }
 //examinar
 int peek(){
@@ -94,10 +101,11 @@ void list(){
 
 
 int main(){
+    Fila teste;
     start();
+    
     char op;
     int aux;
-
     while (op != 'X')
     {
         printf("Digite a opção desejada:\n");
@@ -105,7 +113,7 @@ int main(){
         printf("R - Remover elementos\n");
         printf("L - Listar elementos\n");
         printf("E - Examinar o elemento da cabeça\n");
-        printf("L - Limapar a Fila\n");
+        printf("C - Limapar a Fila\n");
         printf("T - Tamanho da Fila\n");
         printf("X - Sair do programa\n");
 
@@ -127,8 +135,9 @@ int main(){
         }else if (op == 'E')
         {
             printf("O valor examinado = %d\n", peek());
-        }else if (op == 'L')
+        }else if (op == 'C')
         {
+            clear();
             printf("Limepeza executada!\n");
         }else if (op == 'T')
         {
@@ -136,9 +145,7 @@ int main(){
         }else if (op == 'S')
         {
             printf("Bye Bye\n");
-        }
-        
+        }   
     }
-    
     return 0;
 }

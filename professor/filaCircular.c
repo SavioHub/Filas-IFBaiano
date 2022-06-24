@@ -3,27 +3,27 @@
 #define TAM 6
 
 struct fila{
-    int f;
-    int r;
+    int primeiro;
+    int ultimo;
     float elementos[TAM];
 };
 
 typedef struct fila Fila;
 
-void inseir(Fila *q, float x);
-void remover(Fila *q);
+void enqueue(Fila *q, float x);
+void dequeue(Fila *q);
 int isEmpty(Fila q);
 int isFull(Fila q);
 void imprimir(Fila q);
 
 
 
-void inseir(Fila *q, float x){
+void enqueue(Fila *q, float x){
     if(isFull(*q)==0){
-            q->r = (q->r+1) % TAM;
-            q->elementos[q->r] = x;
-            if(q->f==-1){
-                q->f++;
+            q->ultimo = (q->ultimo+1) % TAM;
+            q->elementos[q->ultimo] = x;
+            if(q->primeiro==-1){
+                q->primeiro++;
             }
     }
     else{
@@ -31,14 +31,14 @@ void inseir(Fila *q, float x){
     }
 }
 
-void remover(Fila *q){
+void dequeue(Fila *q){
     if(isEmpty(*q)==0){
-        if(q->f == q->r){
-            q->f = -1;
-            q->r = -1;
+        if(q->primeiro == q->ultimo){
+            q->primeiro = -1;
+            q->ultimo = -1;
         }
         else{
-            q->f = (q->f+1) % TAM;
+            q->primeiro = (q->primeiro+1) % TAM;
         }
     }
     else{
@@ -48,7 +48,7 @@ void remover(Fila *q){
 }
 
 int isEmpty(Fila q){
-    if(q.f == -1){
+    if(q.primeiro == -1){
         return 1;
     }
     else{
@@ -57,10 +57,10 @@ int isEmpty(Fila q){
 }
 
 int isFull(Fila q){
-    if(q.f<q.r && q.f == 0 && q.r == TAM-1){
+    if(q.primeiro<q.ultimo && q.primeiro == 0 && q.ultimo == TAM-1){
         return 1;
     }
-    else if(q.f>q.r && q.f-q.r == 1){
+    else if(q.primeiro>q.ultimo && q.primeiro-q.ultimo == 1){
         return 1;
     }
     else{
@@ -74,17 +74,17 @@ void imprimir(Fila q){
     }
     else{
         printf("\nFila = ");
-        if(q.f<=q.r){
-            for(int i=q.f; i<=q.r; i++){
+        if(q.primeiro<=q.ultimo){
+            for(int i=q.primeiro; i<=q.ultimo; i++){
                 printf("%f ", q.elementos[i]);
             }
             printf("\n");
         }
         else{
-            for(int i=q.f; i<TAM; i++){
+            for(int i=q.primeiro; i<TAM; i++){
                 printf("%f ", q.elementos[i]);
             }
-            for(int i=0; i<=q.r; i++){
+            for(int i=0; i<=q.ultimo; i++){
                 printf("%f ", q.elementos[i]);
             }
         }
@@ -96,7 +96,8 @@ void imprimir(Fila q){
 int main(){
 
     Fila q = {-1, -1};
-    printf("%i %i", q.f, q.r) ;// p.topo=-1;
+
+    printf("%i %i", q.primeiro, q.ultimo) ;// p.topo=-1;
     imprimir(q);
     inseir(&q, 4);
     inseir(&q, 2);

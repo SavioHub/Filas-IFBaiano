@@ -1,5 +1,5 @@
-//A fila Linear a partir do momento que consegue preencher todas as posiçõs dentro do vetor, não conseguimos usar mais esse vetor
-//Mesmo depois de Removerto todod os elee=mentos da Fila, teoricamente não conseguimos fazer mais nada
+// A fila Linear a partir do momento que consegue preencher todas as posiçõs dentro do vetor, não conseguimos usar mais esse vetor
+// Mesmo depois de Removerto todod os elee=mentos da Fila, teoricamente não conseguimos fazer mais nada
 #include <stdio.h>
 #define TAM 10
 
@@ -7,103 +7,97 @@ typedef struct fila
 {
     int primeiro;
     int ultimo;
-    int fila[TAM];
-}Fila;
+    int elementos[TAM];
+} Fila;
 
+// Adicionar
+void enqueue(Fila *q, int x)
+{
 
-void inseir(Fila *q, float x){
-    if(isFull(*q)==0){
-            q->r = (q->r+1) % TAM;
-            q->elementos[q->r] = x;
-            if(q->f==-1){
-                q->f++;
-            }
-    }
-    else{
-        printf("Fila cheia. Nao e possivel inserir elementos. OVERFLOW\n");
-    }
-}
-// ----------------------------------------------------------------------------------------------
-//Adicionar
-void enqueue(int valor){
-    
-    if (ultimo < TAM -1)
+    if (q->ultimo < TAM - 1)
     {
-        //caso inicializar com a variavel: ultimo = -1, deve-se fazer o: ultimo++; primeiro de fila[ultimo]
-        //caso ser ultimo = 0; deve-se fazer ultimo++; depois de fila[ultimo]
-        ultimo++;
-        fila[ultimo] = valor;
+        // caso inicializar com a variavel: ultimo = -1, deve-se fazer o: ultimo++; primeiro de fila[ultimo]
+        // caso ser ultimo = 0; deve-se fazer ultimo++; depois de fila[ultimo]
+        q->ultimo++;
+        q->elementos[q->ultimo] = x;
         printf("\nValor inserido com sucesso!\n\n");
-    }else
+    }
+    else
     {
-        printf("\nValor não inserido\n"); 
+        printf("\nValor não inserido\n");
     }
 }
 
-//remover
-int dequeue(){ 
+// remover
+int dequeue(Fila *q)
+{
     int aux;
-    if (primeiro<=ultimo)
+    if (q->primeiro <= q->ultimo)
     {
-        aux = fila[primeiro];//criação do aux, aux recebe fila na posição 0
-        fila[primeiro] = -1;
-        primeiro++;//atualiza o 0 para 1
+        aux = q->elementos[q->primeiro]; // criação do aux, aux recebe fila na posição 0
+        q->primeiro++; // atualiza o 0 para 1
         return aux;
-    }else
+    }
+    else
     {
         printf("\nNão existe valor a ser removido\n");
     }
-    
 }
-//examinar
-int peek(){
-    if (primeiro<=ultimo)
+// examinar
+int peek(Fila q)
+{
+    if (q.primeiro <= q.ultimo)
     {
-        return fila[primeiro];
-    }else
+        return q.elementos[q.primeiro];
+    }
+    else
     {
         return -1;
     }
 }
-//esvaziar
-void clear(){
+// esvaziar
+void clear(Fila q)
+{
     int i;
-    //resetação dos cursores
-    primeiro =0;
-    ultimo = -1;
-    //for para limpar toda a memória
-    for (i = 0; i < TAM; i++)
+    // resetação dos cursores
+    q.primeiro = 0;
+    q.ultimo = -1;
+    // for para limpar toda a memória
+    for (i = 0; i < TAM - 1; i++)
     {
-        fila[i] = 0;
+        q.elementos[i] = 0;
     }
 }
 
-//Tamanho
-int size(){
-    return (ultimo - primeiro + 1);
+// Tamanho
+int size(Fila q)
+{
+    return (q.ultimo - q.primeiro + 1);
 }
 // 2 elementos
 // ultimo = 1
 // primeiro = 0
 // ultimo - primeiro + 1 = 2
 
-//listar
-void list(){
+// listar
+void list(Fila q)
+{
     int i;
     printf("\nValores dentro da Fila:\n");
-    for (i = 0; i < TAM; i++)
+    for (i = q.primeiro; i <= q.ultimo; i++)
     {
-        printf("Valor da posição %d = %d\n",i, fila[i]);
+        printf("Valor da posição %d = %d\n", i, q.elementos[i]);
     }
-    printf("Primeiro = %d\n",primeiro);
-    printf("Ultimo = %d\n\n",ultimo);
+    printf("Primeiro = %d\n", q.primeiro);
+    printf("Ultimo = %d\n\n", q.ultimo);
 }
 
+int main()
+{
+    Fila q;
+    q.primeiro = 0;
+    q.ultimo = -1;
 
-int main(){
-    Fila teste;
-    start();
-    
     char op;
     int aux;
     while (op != 'X')
@@ -120,32 +114,39 @@ int main(){
         fflush(stdin);
         scanf(" %c", &op);
 
-        if (op=='A')
+        if (op == 'A')
         {
             printf("Digite o valor a ser inserido:\n");
             scanf("%d", &aux);
-            enqueue(aux);
-
-        }else if (op == 'R')
+            enqueue(&q, aux);
+        }
+        else if (op == 'R')
         {
-            printf("Valor removido = %d\n\n", dequeue());
-        }else if (op == 'L')
+            int remove;
+            remove = dequeue(&q);
+            printf("Valor removido = %d\n\n",remove);
+        }
+        else if (op == 'L')
         {
-            list();
-        }else if (op == 'E')
+            list(q);
+        }
+        else if (op == 'E')
         {
-            printf("O valor examinado = %d\n", peek());
-        }else if (op == 'C')
+            printf("O valor examinado = %d\n", peek(q));
+        }
+        else if (op == 'C')
         {
-            clear();
+            clear(q);
             printf("Limepeza executada!\n");
-        }else if (op == 'T')
+        }
+        else if (op == 'T')
         {
-            printf("Tamanho da Fila = %d\n", size());
-        }else if (op == 'S')
+            printf("Tamanho da Fila = %d\n", size(q));
+        }
+        else if (op == 'S')
         {
             printf("Bye Bye\n");
-        }   
+        }
     }
     return 0;
 }

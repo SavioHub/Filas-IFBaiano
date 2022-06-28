@@ -1,5 +1,5 @@
-//A fila Linear a partir do momento que consegue preencher todas as posiçõs dentro do vetor, não conseguimos usar mais esse vetor
-//Mesmo depois de Removerto todod os elee=mentos da Fila, teoricamente não conseguimos fazer mais nada
+// A fila Linear a partir do momento que consegue preencher todas as posiçõs dentro do vetor, não conseguimos usar mais esse vetor
+// Mesmo depois de Removerto todod os elee=mentos da Fila, teoricamente não conseguimos fazer mais nada
 #include <stdio.h>
 #define TAM 10
 
@@ -7,67 +7,75 @@ int primeiro;
 int ultimo;
 int fila[TAM];
 
-//Inicar
-void start(){
+// Inicar
+void start()
+{
     primeiro = 0;
     ultimo = -1;
 }
-//Adicionar
-void enqueue(int valor){
-    
-    if (ultimo < TAM -1)
+// Adicionar
+void enqueue(int valor)
+{
+
+    if (ultimo < TAM - 1)
     {
-        //caso inicializar com a variavel: ultimo = -1, deve-se fazer o: ultimo++; primeiro de fila[ultimo]
-        //caso ser ultimo = 0; deve-se fazer ultimo++; depois de fila[ultimo]
+        // caso inicializar com a variavel: ultimo = -1, deve-se fazer o: ultimo++; primeiro de fila[ultimo]
+        // caso ser ultimo = 0; deve-se fazer ultimo++; depois de fila[ultimo]
         ultimo++;
         fila[ultimo] = valor;
         printf("\nValor inserido com sucesso!\n\n");
-    }else
+    }
+    else
     {
-        printf("\nValor não inserido\n"); 
+        printf("\nValor não inserido\n");
     }
 }
 
-//remover
-int dequeue(){ 
+// remover
+int dequeue()
+{
     int aux;
-    if (primeiro<=ultimo)
+    if (primeiro <= ultimo)
     {
-        aux = fila[primeiro];//criação do aux, aux recebe fila na posição 0
-        fila[primeiro] = -1;
-        primeiro++;//atualiza o 0 para 1
+        aux = fila[primeiro]; // criação do aux, aux recebe fila na posição 0
+        // fila[primeiro] = -1; //Para dar o valor aos elementos exclusos de 0
+        primeiro++; // atualiza o 0 para 1
         return aux;
-    }else
+    }
+    else
     {
         printf("\nNão existe valor a ser removido\n");
     }
-    
 }
-//examinar
-int peek(){
-    if (primeiro<=ultimo)
+// examinar
+int peek()
+{
+    if (primeiro <= ultimo)
     {
         return fila[primeiro];
-    }else
+    }
+    else
     {
         return -1;
     }
 }
-//esvaziar
-void clear(){
+// esvaziar
+void clear()
+{
     int i;
-    //resetação dos cursores
-    primeiro =0;
+    // resetação dos cursores
+    primeiro = 0;
     ultimo = -1;
-    //for para limpar toda a memória
+    // for para limpar toda a memória
     for (i = 0; i < TAM; i++)
     {
         fila[i] = 0;
     }
 }
 
-//Tamanho
-int size(){
+// Tamanho
+int size()
+{
     return (ultimo - primeiro + 1);
 }
 // 2 elementos
@@ -75,20 +83,21 @@ int size(){
 // primeiro = 0
 // ultimo - primeiro + 1 = 2
 
-//listar
-void list(){
+// listar
+void list()
+{
     int i;
     printf("\nValores dentro da Fila:\n");
     for (i = 0; i < TAM; i++)
     {
-        printf("Valor da posição %d = %d\n",i, fila[i]);
+        printf("Valor da posição %d = %d\n", i, fila[i]);
     }
-    printf("Primeiro = %d\n",primeiro);
-    printf("Ultimo = %d\n\n",ultimo);
+    printf("Primeiro = %d\n", primeiro);
+    printf("Ultimo = %d\n\n", ultimo);
 }
 
-
-int main(){
+int main()
+{
     start();
 
     char op;
@@ -107,32 +116,37 @@ int main(){
         fflush(stdin);
         scanf(" %c", &op);
 
-        if (op=='A')
+        if (op == 'A')
         {
             printf("Digite o valor a ser inserido:\n");
             scanf("%d", &aux);
             enqueue(aux);
-
-        }else if (op == 'R')
+        }
+        else if (op == 'R')
         {
             printf("Valor removido = %d\n\n", dequeue());
-        }else if (op == 'L')
+        }
+        else if (op == 'L')
         {
             list();
-        }else if (op == 'E')
+        }
+        else if (op == 'E')
         {
             printf("O valor examinado = %d\n", peek());
-        }else if (op == 'C')
+        }
+        else if (op == 'C')
         {
             clear();
             printf("Limepeza executada!\n");
-        }else if (op == 'T')
+        }
+        else if (op == 'T')
         {
             printf("Tamanho da Fila = %d\n", size());
-        }else if (op == 'S')
+        }
+        else if (op == 'S')
         {
             printf("Bye Bye\n");
-        }   
+        }
     }
     return 0;
 }

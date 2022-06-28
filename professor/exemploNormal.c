@@ -48,7 +48,7 @@ void dequeue(Fila *q){
 }
 
 int isEmpty(Fila q){
-    if(q.primeiro == -1){
+    if(q.ultimo == -1){
         return 1;
     }
     else{

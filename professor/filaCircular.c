@@ -2,16 +2,14 @@
 #include<stdlib.h>
 #define TAM 6
 
-struct fila{
+typedef struct fila{
     int primeiro;
     int ultimo;
     float elementos[TAM];
-};
-
-typedef struct fila Fila;
+}Fila;
 
 void enqueue(Fila *q, float x);
-void dequeue(Fila *q);
+int dequeue(Fila *q);
 int isEmpty(Fila q);
 int isFull(Fila q);
 void imprimir(Fila q);
@@ -31,14 +29,16 @@ void enqueue(Fila *q, float x){
     }
 }
 
-void dequeue(Fila *q){
+int dequeue(Fila *q){
+    int aux;
     if(isEmpty(*q)==0){
         if(q->primeiro == q->ultimo){
             q->primeiro = -1;
             q->ultimo = -1;
         }
         else{
-            q->primeiro = (q->primeiro+1) % TAM;
+            aux = q->primeiro = (q->primeiro+1) % TAM;
+            return aux;
         }
     }
     else{
@@ -68,7 +68,7 @@ int isFull(Fila q){
     }
 }
 
-void imprimir(Fila q){
+void list(Fila q){
     if(isEmpty(q)==1){
         printf("Fila vazia, nao e possivel imprimir \n");
     }
@@ -76,16 +76,16 @@ void imprimir(Fila q){
         printf("\nFila = ");
         if(q.primeiro<=q.ultimo){
             for(int i=q.primeiro; i<=q.ultimo; i++){
-                printf("%f ", q.elementos[i]);
+                printf("%.1f \n", q.elementos[i]);
             }
             printf("\n");
         }
         else{
             for(int i=q.primeiro; i<TAM; i++){
-                printf("%f ", q.elementos[i]);
+                printf("%.1f \n", q.elementos[i]);
             }
             for(int i=0; i<=q.ultimo; i++){
-                printf("%f ", q.elementos[i]);
+                printf("%.1f \n", q.elementos[i]);
             }
         }
 
@@ -96,31 +96,39 @@ void imprimir(Fila q){
 int main(){
 
     Fila q = {-1, -1};
+    char op;
+    int aux;
 
-    printf("%i %i", q.primeiro, q.ultimo) ;// p.topo=-1;
-    imprimir(q);
-    inseir(&q, 4);
-    inseir(&q, 2);
-    inseir(&q, 5);
-    inseir(&q, 6);
-    inseir(&q, 7);
-    inseir(&q, 8);
-    inseir(&q, 9);
-    inseir(&q, 47);
-    imprimir(q);
-    remover(&q);
-    imprimir(q);
-    remover(&q);
-    remover(&q);
-    remover(&q);
-    imprimir(q);
-    inseir(&q, 40);
-    inseir(&q, 20);
-    inseir(&q, 50);
-    imprimir(q);
-    inseir(&q, 60);
-    imprimir(q);
-    inseir(&q, 70);
-    imprimir(q);
+    while (op != 'X')
+    {
+        printf("Digite a opção desejada:\n");
+        printf("A - Adicionar elementos\n");
+        printf("R - Remover elementos\n");
+        printf("L - Listar elementos\n");
+        printf("X - Sair do programa\n");
 
+        fflush(stdin);
+        scanf(" %c", &op);
+
+        if (op == 'A')
+        {
+            printf("Digite o valor a ser inserido:\n");
+            scanf("%d", &aux);
+            enqueue(&q,aux);
+        }
+        else if (op == 'R')
+        {
+            int remove;
+            remove=dequeue(&q);
+            printf("Valor removido = %d\n\n",remove);
+        }
+        else if (op == 'L')
+        {
+            list(q);
+        }
+        else if (op == 'S')
+        {
+            printf("Bye Bye\n");
+        }
+    }
 }

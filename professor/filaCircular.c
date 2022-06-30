@@ -30,15 +30,13 @@ void enqueue(Fila *q, float x){
 }
 
 int dequeue(Fila *q){
-    int aux;
     if(isEmpty(*q)==0){
         if(q->primeiro == q->ultimo){
             q->primeiro = -1;
             q->ultimo = -1;
         }
         else{
-            aux = q->primeiro = (q->primeiro+1) % TAM;
-            return aux;
+            q->primeiro = (q->primeiro+1) % TAM;
         }
     }
     else{
